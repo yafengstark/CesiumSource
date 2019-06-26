@@ -41,7 +41,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a data-toggle="collapse" href="#fast-location" aria-expanded="false" aria-controls="collapseExample">图层管理</a>
+                        <a data-toggle="collapse" href="#fast-location" aria-expanded="false"
+                           aria-controls="collapseExample">图层管理</a>
                     </li>
                     <li>
                         <a data-toggle="collapse" data-target="#lol" aria-expanded="false"
@@ -103,6 +104,16 @@
             <div class="col-md-4 column handle-panel">
                 <div class="collapse" id="fast-location">
                     <div class="well">
+
+                        <div class="fast-location" >
+                            <span class="text-muted section-title">快速定位</span>
+                            <br>
+                            <input type="text" data-bind="value: lon" placeholder="经度">
+                            <input type="text" data-bind="value: lat" placeholder="纬度">
+                            <input type="text" data-bind="value: ele" placeholder="视点高度">
+
+                            <button type="button" data-bind="click: fly" class="btn btn-primary">跳转</button>
+                        </div>
 
                     </div>
                 </div>

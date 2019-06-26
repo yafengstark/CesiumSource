@@ -1750,11 +1750,11 @@ body {
 }
 
 /*.navbar .nav li > a:visited {*/
-    /*color: #000000;*/
+/*color: #000000;*/
 /*}*/
 
 /*.navbar .nav li > a:hover {*/
-    /*color: #000000;*/
+/*color: #000000;*/
 /*}*/
 
 .navbar-nav > li > a:hover {
@@ -1769,11 +1769,29 @@ body {
     padding: 0px;
 }
 
-.handle-panel>div {
+.handle-panel > div {
     padding: 0px;
     margin: 0px;
 }
-.well{
-    padding: 0px;
+
+.well {
+    padding: 10px;
     margin: 10px;
+    margin-left: 20px;
+}
+.section-title  {
+    font-size: 20px;
+}
+.fast-location > input {
+    padding: 0px;
+    margin: 5px;
+    border-radius: 2px;
+    width: 30%;
+    color: #000000;
+}
+
+.fast-location > button {
+    display: block;
+    margin: 0 auto
+
 }
