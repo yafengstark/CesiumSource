@@ -57,7 +57,9 @@
                             class="caret"></strong></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">鼠标选点</a>
+                                <a data-toggle="collapse" data-target="#mouse-pick" aria-expanded="false"
+                                   aria-controls="collapseExample">鼠标选点</a>
+                                <!-- 鼠标悬浮显示经纬度-->
                             </li>
                             <li>
                                 <a href="#">模拟飞行</a>
@@ -65,12 +67,27 @@
                             <li class="divider">
                             </li>
                             <li>
-                                <a href="#">等高线</a>
+                                <a href="#">等高线、坡度</a>
+                                <!--TODO Globe Materials-->
                             </li>
                             <li class="divider">
                             </li>
                             <li>
                                 <a href="#">场景书签</a>
+                            </li>
+                            <li>
+                                <a href="#">CZML可视化</a>
+                            </li>
+                            <li>
+                                <a href="#">KML可视化</a>
+                            </li>
+                            <li>
+                                <a href="#">文字标注</a>
+                                <!--TODO Labels-->
+                            </li>
+                            <li>
+                                <a href="#">地图钉</a>
+                                <!--TODO Map Pins-->
                             </li>
                         </ul>
                     </li>
@@ -105,7 +122,7 @@
                 <div class="collapse" id="fast-location">
                     <div class="well">
 
-                        <div class="fast-location" >
+                        <div class="fast-location">
                             <span class="text-muted section-title">快速定位</span>
                             <br>
                             <input type="text" data-bind="value: lon" placeholder="经度">
@@ -123,6 +140,28 @@
                         《英雄联盟》（简称lol）是由美国Riot Games开发，中国大陆地区由腾讯游戏运营的网络游戏。
                     </div>
                 </div>
+                <div class="collapse" id="mouse-pick">
+                    <div class="well">
+                        <div class="fast-location">
+                            <span class="text-muted section-title">鼠标选点</span>
+                            <br>
+                            <span class="label label-default">经度:</span>
+                            <input type="text" data-bind="value: lon" placeholder="经度">
+                            <span class="label label-default">纬度:</span>
+                            <input type="text" data-bind="value: lat" placeholder="纬度">
+                            <span class="label label-default">高程:</span>
+                            <input type="text" data-bind="value: ele" placeholder="高程">
+                            <div class="btn-group" role="group" aria-label="web">
+                                <button type="button" data-bind="click: start" class="btn btn-primary">开始</button>
+                                <button type="button" data-bind="click: stop" class="btn btn-default">取消</button>
+                            </div>
+                            <br>
+                            <span class="text-info">快捷键shift+s 快速选点，shift+h 停止选点 </span>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div style="height:100px"></div>
             </div>
             <div class="col-md-8 column" id="cesiumContainer" style="height: 100%">
