@@ -10,17 +10,19 @@ require(['Source/Cesium',
     'use strict';
 //Sandcastle_Begin
     var worldTerrain = Cesium.createWorldTerrain({
-        requestWaterMask: true,
-        requestVertexNormals: true
+        requestWaterMask : true,
+        requestVertexNormals : true
     });
 
     var viewer = new Cesium.Viewer('cesiumContainer', {
-        terrainProvider: worldTerrain
+        terrainProvider : worldTerrain
     });
     var scene = viewer.scene;
     //
     fastLocation();
     mousePick();
+    //
+    readCzml();
     //
     /**
      * 快速定位
@@ -41,8 +43,8 @@ require(['Source/Cesium',
 // Convert the viewModel members into knockout observables.
         Cesium.knockout.track(viewModel);
 // Bind the viewModel to the DOM elements of the UI that call for it.
-        var fastLocationView = document.getElementById('fast-location');
-        Cesium.knockout.applyBindings(viewModel, fastLocationView);
+        var view = document.getElementById('fast-location');
+        Cesium.knockout.applyBindings(viewModel, view);
     }
 
     /**
@@ -64,7 +66,7 @@ require(['Source/Cesium',
             lat : 30,
             lon : 120,
             ele : 150000,
-            height: 15000000,
+            height : 15000000,
             start : function() {
                 console.log();
                 handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
@@ -84,7 +86,7 @@ require(['Source/Cesium',
                         // 获取某位置的高程
                         //根据经纬度计算出地形高度。
 
-                        var cartographic2 = Cesium.Cartographic.fromDegrees( Cesium.Math.toDegrees(cartographic.longitude),
+                        var cartographic2 = Cesium.Cartographic.fromDegrees(Cesium.Math.toDegrees(cartographic.longitude),
                             Cesium.Math.toDegrees(cartographic.latitude));// 地图坐标
                         // var terHigh =  viewer.scene.globe.getHeight(cartographic2); // 不管用
                         // var terHigh = cartographic.height;
@@ -92,7 +94,7 @@ require(['Source/Cesium',
                          * [cartographic2] 位置数组
                          */
                         var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [cartographic2]);
-                        Cesium.when(promise, function (updatedPositions) {
+                        Cesium.when(promise, function(updatedPositions) {
                             if (updatedPositions.length > 0) {
                                 var position = updatedPositions[0];
 
@@ -134,7 +136,7 @@ require(['Source/Cesium',
             var a = window.event.keyCode;
             if ((a === 83) && (event.shiftKey)) { // s
                 viewModel.start();
-            }else if((a === 72 ) && (event.shiftKey)) { // h
+            } else if ((a === 72 ) && (event.shiftKey)) { // h
                 viewModel.stop();
             }
         }// end hotkey
@@ -143,6 +145,40 @@ require(['Source/Cesium',
         Cesium.knockout.track(viewModel);
 // Bind the viewModel to the DOM elements of the UI that call for it.
         var view = document.getElementById('mouse-pick');
+        Cesium.knockout.applyBindings(viewModel, view);
+    }
+
+    /**
+     * czml可视化
+     */
+    function readCzml() {
+        var viewModel = {
+            lat : 30,
+            lon : 120,
+            ele : 150000,
+            upload : function(file) {
+                // 支持chrome IE10
+                if (window.FileReader) {
+                    // var file = input.files[0];
+                    var filename = file.name.split(".")[0];
+                    console.log("选择的文件名是"+ filename);
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        console.log(this.result);
+                        var testJson = eval("(" + this.result + ")");
+                        viewer.dataSources.add(Cesium.CzmlDataSource.load(testJson));
+                    };
+                    reader.readAsText(file);
+                }
+                else {
+                    alert('error');
+                }
+            }
+        };
+// Convert the viewModel members into knockout observables.
+        Cesium.knockout.track(viewModel);
+// Bind the viewModel to the DOM elements of the UI that call for it.
+        var view = document.getElementById('visual-czml');
         Cesium.knockout.applyBindings(viewModel, view);
     }
 });

@@ -76,7 +76,8 @@
                                 <a href="#">场景书签</a>
                             </li>
                             <li>
-                                <a href="#">CZML可视化</a>
+                                <a data-toggle="collapse" data-target="#visual-czml" aria-expanded="false"
+                                   aria-controls="collapseExample">CZML可视化</a>
                             </li>
                             <li>
                                 <a href="#">KML可视化</a>
@@ -88,6 +89,10 @@
                             <li>
                                 <a href="#">地图钉</a>
                                 <!--TODO Map Pins-->
+                            </li>
+                            <li>
+                                <a href="#">画框选择</a>
+                                <!-- TODO:-->
                             </li>
                         </ul>
                     </li>
@@ -125,7 +130,6 @@
                         <div class="fast-location">
                             <span class="text-muted section-title">快速定位</span>
                             <br>
-
                             <form class="form-horizontal" role="form">
                                 <div class="input-group">
                                     <span class="input-group-addon">经度</span>
@@ -148,11 +152,6 @@
                     </div>
                 </div>
 
-                <div class="collapse" id="lol">
-                    <div class="well">
-                        《英雄联盟》（简称lol）是由美国Riot Games开发，中国大陆地区由腾讯游戏运营的网络游戏。
-                    </div>
-                </div>
                 <div class="collapse" id="mouse-pick">
                     <div class="well">
                         <div class="fast-location">
@@ -186,7 +185,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="collapse" id="visual-czml">
+                    <div class="well">
 
+                        <div class="fast-location">
+                            <span class="text-muted section-title">CZML可视化</span>
+                            <br>
+                            <form class="form-horizontal" role="form">
+                                <div class="input-group">
+                                    <label class="sr-only" for="inputfile">文件输入</label>
+                                    <input type="file" class="btn btn-primary btn-block" id="inputfile" data-bind="event: {change:function() {  upload($element.files[0]) }}"  />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
                 <div style="height:100px"></div>
             </div>
             <div class="col-md-8 column" id="cesiumContainer" style="height: 100%">
