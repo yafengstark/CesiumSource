@@ -188,6 +188,7 @@ Sandcastle.addToggleButton('Enable fog', viewer.scene.fog.enabled, function(chec
 
 Sandcastle.addToolbarButton('Sample Everest Terrain at Level 9', function() {
     var terrainSamplePositions = createGrid(0.005);
+    // 某一个地点数组的高程，指定层号
     Cesium.when(Cesium.sampleTerrain(viewer.terrainProvider, 9, terrainSamplePositions), sampleTerrainSuccess);
     lookAtMtEverest();
 }, 'sampleButtons');
@@ -198,6 +199,7 @@ Sandcastle.addToolbarButton('Sample Most Detailed Everest Terrain', function() {
         return;
     }
     var terrainSamplePositions = createGrid(0.0005);
+    // 最细节的高程值
     Cesium.when(Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, terrainSamplePositions), sampleTerrainSuccess);
     lookAtMtEverest();
 }, 'sampleButtons');
