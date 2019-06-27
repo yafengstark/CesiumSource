@@ -125,11 +125,24 @@
                         <div class="fast-location">
                             <span class="text-muted section-title">快速定位</span>
                             <br>
-                            <input type="text" data-bind="value: lon" placeholder="经度">
-                            <input type="text" data-bind="value: lat" placeholder="纬度">
-                            <input type="text" data-bind="value: ele" placeholder="视点高度">
 
-                            <button type="button" data-bind="click: fly" class="btn btn-primary">跳转</button>
+                            <form class="form-horizontal" role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon">经度</span>
+                                    <input type="text" class="form-control" data-bind="value: lon" placeholder="经度">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">纬度</span>
+                                    <input type="text" class="form-control" data-bind="value: lat" placeholder="纬度">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">高程</span>
+                                    <input type="text" class="form-control" data-bind="value: ele" placeholder="视点高度">
+                                </div>
+                                <button type="button" class="btn btn-primary btn-block" data-bind="click: fly">
+                                    跳转
+                                </button>
+                            </form>
                         </div>
 
                     </div>
@@ -145,12 +158,24 @@
                         <div class="fast-location">
                             <span class="text-muted section-title">鼠标选点</span>
                             <br>
-                            <span class="label label-default">经度:</span>
-                            <input type="text" data-bind="value: lon" placeholder="经度">
-                            <span class="label label-default">纬度:</span>
-                            <input type="text" data-bind="value: lat" placeholder="纬度">
-                            <span class="label label-default">高程:</span>
-                            <input type="text" data-bind="value: ele" placeholder="高程">
+                            <form class="form-horizontal" role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon">经度</span>
+                                    <input type="text" class="form-control" data-bind="value: lon" placeholder="经度">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">纬度</span>
+                                    <input type="text" class="form-control" data-bind="value: lat" placeholder="纬度">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">高程</span>
+                                    <input type="text" class="form-control" data-bind="value: ele" placeholder="高程">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">视点高度</span>
+                                    <input type="text" class="form-control" data-bind="value: height" placeholder="视点高度">
+                                </div>
+                            </form>
                             <div class="btn-group" role="group" aria-label="web">
                                 <button type="button" data-bind="click: start" class="btn btn-primary">开始</button>
                                 <button type="button" data-bind="click: stop" class="btn btn-default">取消</button>

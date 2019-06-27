@@ -9,11 +9,13 @@ require(['Source/Cesium',
          'Apps/Utils/view-util'], function(Cesium, ViewUtil) {
     'use strict';
 //Sandcastle_Begin
+    var worldTerrain = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true
+    });
+
     var viewer = new Cesium.Viewer('cesiumContainer', {
-        infoBox : false,
-        selectionIndicator : false,
-        shadows : true,
-        shouldAnimate : true
+        terrainProvider: worldTerrain
     });
     var scene = viewer.scene;
     //
@@ -62,24 +64,59 @@ require(['Source/Cesium',
             lat : 30,
             lon : 120,
             ele : 150000,
+            height: 15000000,
             start : function() {
                 console.log();
                 handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+                var ellipsoid = viewer.scene.globe.ellipsoid;   //得到当前三维场景的椭球体
                 handler.setInputAction(function(movement) {
-                    var cartesian = viewer.camera.pickEllipsoid(movement.endPosition, scene.globe.ellipsoid);
+                    var cartesian = viewer.camera.pickEllipsoid(movement.endPosition,
+                        ellipsoid);// 直角坐标系坐标
                     if (cartesian) {
-                        var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                        //将笛卡尔坐标转换为地理坐标
+                        // Cartographic 地图的
+                        var cartographic = Cesium.Cartographic.fromCartesian(cartesian);// 得到弧度
                         var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(5);
                         var latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(5);
+                        // 相机高度
+                        var height = Math.ceil(viewer.camera.positionCartographic.height);
+                        //
+                        // 获取某位置的高程
+                        //根据经纬度计算出地形高度。
 
-                        viewModel.lat = latitudeString;
-                        viewModel.lon = longitudeString;
-                        //TODO: ele
+                        var cartographic2 = Cesium.Cartographic.fromDegrees( Cesium.Math.toDegrees(cartographic.longitude),
+                            Cesium.Math.toDegrees(cartographic.latitude));// 地图坐标
+                        // var terHigh =  viewer.scene.globe.getHeight(cartographic2); // 不管用
+                        // var terHigh = cartographic.height;
+                        /**
+                         * [cartographic2] 位置数组
+                         */
+                        var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [cartographic2]);
+                        Cesium.when(promise, function (updatedPositions) {
+                            if (updatedPositions.length > 0) {
+                                var position = updatedPositions[0];
+
+                                var terHigh = (position.height ? position.height.toFixed(1) : 0);
+
+                                viewModel.lat = latitudeString;
+                                viewModel.lon = longitudeString;
+                                viewModel.height = height;
+                                viewModel.ele = terHigh; // 高程
+                                // console.log(
+                                //     'lng:' + Cesium.Math.toDegrees(position.longitude)+
+                                //     ',lat:' + Cesium.Math.toDegrees(position.latitude) +
+                                //     ',height:' + );
+                            } else {
+                                console.log('无法获取高程');
+                            }
+                        });
                         entity.position = cartesian;
                         entity.label.show = true;
                         entity.label.text =
                             '经度: ' + ('   ' + longitudeString) + '\u00B0' +
-                            '\n纬度: ' + ('   ' + latitudeString) + '\u00B0';
+                            '\n纬度: ' + ('   ' + latitudeString) + '\u00B0' +
+                            // '\n高程: ' + ('   ' +terHigh ) + '米'+
+                            '\n视角高度: ' + ('   ' + height) + '米';
                     } else {
                         //
                         entity.label.show = false;
